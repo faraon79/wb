@@ -1,0 +1,18 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<bean id="cityRest" class="com.tomeq.wb.resource.City" scope="prototype"/>
+
+	<jaxrs:server id="projectRest" address="/service">
+		<jaxrs:serviceBeans>
+			<ref bean="cityRest" />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json;charset=UTF-8"/>
+			<entry key="xml" value="application/xml"/>
+		</jaxrs:extensionMappings>
+	</jaxrs:server>
+
+</beans>
