@@ -1,14 +1,49 @@
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-	   xmlns="http://www.springframework.org/schema/beans"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+<!--
 
-	<bean id="cityRest" class="com.tomeq.wb.resource.City" scope="prototype"/>
+	&lt;!&ndash; Use in-memory embedded H2 database &ndash;&gt;
+	<jdbc:embedded-database id="dataSource" type="H2"></jdbc:embedded-database>
 
-	<jaxrs:server id="projectRest" address="/service">
-		<jaxrs:serviceBeans>
-			<ref bean="cityRest" />
-		</jaxrs:serviceBeans>
+	&lt;!&ndash; Run H2 web server within application that will access the same in-memory database &ndash;&gt;
+	<bean id="h2Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start" destroy-method="stop" depends-on="h2WebServer">
+		<constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092"/>
+	</bean>
+	<bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start" destroy-method="stop">
+		<constructor-arg value="-web,-webAllowOthers,-webPort,8082"/>
+	</bean>
+
+	&lt;!&ndash; Database managed by Hibernate &ndash;&gt;
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="WbPersistenceUnit" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="transactionManager"
+		  class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+-->
+
+	<import resource="classpath:META-INF/com/tomeq/wb/city-context.xml"/>
+
+	<bean id="cityRest" class="com.tomeq.wb.resource.CityResource" scope="prototype">
+		<property name="cityService" ref="cityService"/>
+	</bean>
+
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
+
+	<jaxrs:server id="projectRest" address="/service"
+			beanNames="cityRest">
+		<jaxrs:providers>
+			<ref bean="jsonProvider"/>
+		</jaxrs:providers>
 		<jaxrs:extensionMappings>
 			<entry key="json" value="application/json;charset=UTF-8"/>
 			<entry key="xml" value="application/xml"/>
