@@ -23,7 +23,7 @@
 			<property name="hibernate.connection.url" value="jdbc:sqlserver://localhost;databaseName=wb" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
 			<property name="hibernate.hbm2ddl.auto" value="create" />
-			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.show_sql" value="false"/>
 			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
 		</properties>
 	</persistence-unit>

@@ -13,14 +13,11 @@ public class CityService {
 		cityDao = (CityDao)daoFactory.getDao(CityDao.class);
 	}
 
-	public City createCity(String owner, String name){
-		City city = new City();
-		city.setName(name);
-		city.setOwner(owner);
+	public City create(City city){
 		return cityDao.create(city);
 	}
 
-	public City getCity(String id){
+	public City get(String id){
 		return cityDao.findById(id);
 	}
 

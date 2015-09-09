@@ -33,16 +33,16 @@ public class CityResource {
 	@Path("/{id}")
 	public City getCity(@PathParam("id") String id){
 		logger.info("Getting city with id: {}", id);
-		return cityService.getCity(id);
+		return cityService.get(id);
 	}
 
 	@POST
 	@Path("/")
 	public String createCity(City city){
 		logger.info("Creating city {}", city.getName());
-		City tempCity = cityService.createCity(city.getOwner(), city.getName());
+		city = cityService.create(city);
 		logger.info("Successfully created city {} with id: {}", city.getName(), city.getId());
-		return String.valueOf(tempCity.getId());
+		return String.valueOf(city.getId());
 	}
 
 	public void setCityService(CityService cityService){
