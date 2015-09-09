@@ -102,13 +102,13 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-
-		<!-- H2 -->
+<!--
+		&lt;!&ndash; H2 &ndash;&gt;
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.slf4j</groupId>

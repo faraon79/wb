@@ -4,7 +4,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+@NamedQueries({
+	@NamedQuery(
+		name = "City.findByOwner",
+		query = "SELECT c FROM City c WHERE c.owner = :owner"
+	)
+})
 
 @Entity
 @Table(name="WB_CITY")
