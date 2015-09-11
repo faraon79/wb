@@ -15,15 +15,25 @@ public class CityService {
 		cityDao = (CityDao)daoFactory.getDao(CityDao.class);
 	}
 
-	public City create(City city){
-		return cityDao.create(city);
+	public List<City> getAll(String owner) {
+		return cityDao.findByOwner(owner);
 	}
 
 	public City get(String id){
 		return cityDao.findById(id);
 	}
 
-	public List<City> getAll(String owner) {
-		return cityDao.findByOwner(owner);
+	public City create(City city){
+		return cityDao.create(city);
+	}
+
+	public City update(City city) {
+		return cityDao.update(city);
+	}
+
+	public String delete(String id) {
+		City city = get(id);
+		cityDao.delete(city);
+		return id;
 	}
 }
