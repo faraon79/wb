@@ -14,8 +14,8 @@ import javax.ws.rs.core.MediaType;
 
 import java.util.List;
 
-import com.tomeq.wb.exception.NotAuthorizedException;
 import com.tomeq.wb.persistence.entity.City;
+import com.tomeq.wb.security.BasicAuthenticator;
 import com.tomeq.wb.service.CityService;
 
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class CityResource {
 
 	@GET
 	public List<City> getAllCities(@Context HttpHeaders headers){
-		String user = getAuthenticatedUserOrThrowException(headers);
+		String user = BasicAuthenticator.authenticate(headers);
 		logger.info("Getting all cities for user: {}", user);
 			return cityService.getAll(user);
 	}
@@ -39,7 +39,7 @@ public class CityResource {
 	@GET
 	@Path("/{id}")
 	public City getCity(@Context HttpHeaders headers, @PathParam("id") String id){
-		getAuthenticatedUserOrThrowException(headers);
+		BasicAuthenticator.authenticate(headers);
 		logger.info("Getting city with id: {}", id);
 		return cityService.get(id);
 	}
@@ -47,7 +47,7 @@ public class CityResource {
 	@POST
 	@Path("/")
 	public String createCity(@Context HttpHeaders headers, City city){
-		getAuthenticatedUserOrThrowException(headers);
+		BasicAuthenticator.authenticate(headers);
 		logger.info("Creating city {}", city.getName());
 		city = cityService.create(city);
 		logger.info("Successfully created city {} with id: {}", city.getName(), city.getId());
@@ -57,7 +57,7 @@ public class CityResource {
 	@PUT
 	@Path("/")
 	public City updateCity(@Context HttpHeaders headers, City city){
-		getAuthenticatedUserOrThrowException(headers);
+		BasicAuthenticator.authenticate(headers);
 		logger.info("Updating city {}", city.getName());
 		city = cityService.update(city);
 		logger.info("Successfully updated city {} with id: {}", city.getName(), city.getId());
@@ -67,17 +67,11 @@ public class CityResource {
 	@DELETE
 	@Path("/{id}")
 	public String deleteCity(@Context HttpHeaders headers, @PathParam("id") String id) {
-		getAuthenticatedUserOrThrowException(headers);
+		BasicAuthenticator.authenticate(headers);
 		logger.info("Deleting city {}", id);
 		id = cityService.delete(id);
 		logger.info("Successfully deleted city with id: {}", id);
 		return id;
-	}
-
-	private String getAuthenticatedUserOrThrowException(HttpHeaders headers) {
-		if(headers.getRequestHeader("user").size() > 0 )
-			return headers.getRequestHeader("user").get(0);
-		throw new NotAuthorizedException("You are not authorized!");
 	}
 
 	public void setCityService(CityService cityService){
