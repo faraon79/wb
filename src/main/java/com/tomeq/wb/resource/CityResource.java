@@ -46,32 +46,20 @@ public class CityResource {
 
 	@POST
 	@Path("/")
-	public String createCity(@Context HttpHeaders headers, City city){
-		BasicAuthenticator.authenticate(headers);
-		logger.info("Creating city {}", city.getName());
-		city = cityService.create(city);
-		logger.info("Successfully created city {} with id: {}", city.getName(), city.getId());
-		return String.valueOf(city.getId());
+	public String createCity(){
+		throw new UnsupportedOperationException("Unsupported operation!");
 	}
 
 	@PUT
 	@Path("/")
-	public City updateCity(@Context HttpHeaders headers, City city){
-		BasicAuthenticator.authenticate(headers);
-		logger.info("Updating city {}", city.getName());
-		city = cityService.update(city);
-		logger.info("Successfully updated city {} with id: {}", city.getName(), city.getId());
-		return city;
+	public City updateCity(){
+		throw new UnsupportedOperationException("Unsupported operation!");
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public String deleteCity(@Context HttpHeaders headers, @PathParam("id") String id) {
-		BasicAuthenticator.authenticate(headers);
-		logger.info("Deleting city {}", id);
-		id = cityService.delete(id);
-		logger.info("Successfully deleted city with id: {}", id);
-		return id;
+	public String deleteCity(@PathParam("id") String id) {
+		throw new UnsupportedOperationException("Unsupported operation!");
 	}
 
 	public void setCityService(CityService cityService){
