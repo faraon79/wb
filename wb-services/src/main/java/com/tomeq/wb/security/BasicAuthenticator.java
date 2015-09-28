@@ -18,14 +18,14 @@ public class BasicAuthenticator {
 			String username = decodedCredentials[0];
 			String password = decodedCredentials[1];
 
-			if(isAuthenticated()){
+			if(isAuthenticated(username, password)){
 				return username;
 			}
 		}
 		throw new NotAuthorizedException("Authentication failed!");
 	}
 
-	private static boolean isAuthenticated() {
-		return true;
+	private static boolean isAuthenticated(String user, String pass) {
+		return !user.isEmpty() && !pass.isEmpty();
 	}
 }

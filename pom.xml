@@ -127,5 +127,6 @@
 
 	<modules>
 		<module>wb-services</module>
+		<module>wb-services-accepttests</module>
 	</modules>
 </project>
