@@ -1,4 +1,4 @@
-package com.tomeq.wb.resource;
+package com.tomeq.wb;
 
 import static com.jayway.restassured.RestAssured.given;
 

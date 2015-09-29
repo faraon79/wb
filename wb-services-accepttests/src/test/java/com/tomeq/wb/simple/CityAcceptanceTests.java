@@ -1,6 +1,7 @@
-package com.tomeq.wb.resource;
+package com.tomeq.wb.simple;
 
 import com.jayway.restassured.path.json.JsonPath;
+import com.tomeq.wb.AcceptanceTestsBase;
 import com.tomeq.wb.persistence.entity.City;
 
 import org.junit.Before;
