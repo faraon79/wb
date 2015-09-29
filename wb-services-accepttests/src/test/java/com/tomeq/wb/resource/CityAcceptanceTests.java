@@ -27,9 +27,9 @@ public class CityAcceptanceTests extends AcceptanceTestsBase {
 
 	@Test
 	public void can_get_city() {
-		createCity(TEST_NAME);
+		String id = createCity(TEST_NAME);
 
-		JsonPath jsonPath = sendGetRequest(RESOURCE, "1");
+		JsonPath jsonPath = sendGetRequest(RESOURCE, id);
 		assertEquals(TEST_NAME, jsonPath.get("name"));
 	}
 
@@ -46,10 +46,11 @@ public class CityAcceptanceTests extends AcceptanceTestsBase {
 		}
 	}
 
-	private void createCity(String name) {
+	private String createCity(String name) {
 		City city = new City();
 		city.setName(name);
 		city.setOwner(OWNER);
-		sendPostRequest(RESOURCE, city);
+		int id = sendPostRequest(RESOURCE, city).get("id");
+		return String.valueOf(id);
 	}
 }

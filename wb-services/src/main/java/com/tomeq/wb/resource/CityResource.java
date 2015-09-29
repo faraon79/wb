@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 import com.tomeq.wb.persistence.entity.City;
+import com.tomeq.wb.resource.representation.IdResponse;
 import com.tomeq.wb.security.BasicAuthenticator;
 import com.tomeq.wb.service.CityService;
 
@@ -46,11 +47,11 @@ public class CityResource {
 
 	@POST
 	@Path("/")
-	public String createCity(@Context HttpHeaders headers, City city){
+	public IdResponse createCity(@Context HttpHeaders headers, City city){
 		BasicAuthenticator.authenticate(headers);
 		logger.info("Creating city with name: {}", city.getName());
 		city = cityService.create(city);
-		return String.valueOf(city.getId());
+		return new IdResponse(city.getId());
 	}
 
 	@PUT
@@ -63,10 +64,10 @@ public class CityResource {
 
 	@DELETE
 	@Path("/{id}")
-	public String deleteCity(@Context HttpHeaders headers, @PathParam("id") String id) {
+	public IdResponse deleteCity(@Context HttpHeaders headers, @PathParam("id") String id) {
 		BasicAuthenticator.authenticate(headers);
 		logger.info("Delete city with id: {}", id);
-		return cityService.delete(id);
+		return new IdResponse(Integer.valueOf(cityService.delete(id)));
 	}
 
 	public void setCityService(CityService cityService){

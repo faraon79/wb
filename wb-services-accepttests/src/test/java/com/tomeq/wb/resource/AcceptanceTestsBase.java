@@ -32,6 +32,7 @@ public class AcceptanceTestsBase {
 				.body(body, ObjectMapperType.JACKSON_1)
 				.expect()
 				.statusCode(200)
+				.contentType(MediaType.APPLICATION_JSON)
 				.when()
 				.post(resource)
 				.jsonPath();
@@ -59,6 +60,7 @@ public class AcceptanceTestsBase {
 				.contentType(MediaType.APPLICATION_JSON)
 				.expect()
 				.statusCode(200)
+				.contentType(MediaType.APPLICATION_JSON)
 				.when()
 				.delete(uri)
 				.jsonPath();
